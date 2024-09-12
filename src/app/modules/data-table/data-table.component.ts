@@ -16,6 +16,7 @@ import {CdkTableDataSourceInput} from "@angular/cdk/table";
 import {CurrencyDataService} from "../../services/currency-data.service";
 import {take} from "rxjs";
 import {DataFilter} from "../../interfaces/data-filter";
+import {DataInterface} from "../../interfaces/data.interface";
 
 @Component({
   selector: 'app-data-table',
@@ -46,7 +47,7 @@ export class DataTableComponent implements AfterViewInit{
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  dataSource: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<DataInterface>;
   displayedColumns: string[] = [
     "id",
     "name",
@@ -76,7 +77,7 @@ export class DataTableComponent implements AfterViewInit{
 
     this.dataService.getData(this.createdFilter)
       .pipe(take(1))
-      .subscribe(response => console.log(response))
+      .subscribe(response => this.dataSource.data = response)
   }
 
   applyFilter(event: Event) {
