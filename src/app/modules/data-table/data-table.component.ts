@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, inject, ViewChild} from '@angular/core';
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {
@@ -13,6 +13,9 @@ import {
 import {MatSort, MatSortHeader} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {CdkTableDataSourceInput} from "@angular/cdk/table";
+import {CurrencyDataService} from "../../services/currency-data.service";
+import {take} from "rxjs";
+import {DataFilter} from "../../interfaces/data-filter";
 
 @Component({
   selector: 'app-data-table',
@@ -55,7 +58,9 @@ export class DataTableComponent implements AfterViewInit{
     "low_24h",
     "price_change_percentage_24h",
     "circulating_supply"
-];
+  ];
+  dataService = inject(CurrencyDataService);
+  createdFilter: DataFilter = {page: 1, per_page: 10, order: 'id_asc'}
 
   constructor() {
     this.dataSource = new MatTableDataSource();
@@ -68,6 +73,10 @@ export class DataTableComponent implements AfterViewInit{
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+
+    this.dataService.getData(this.createdFilter)
+      .pipe(take(1))
+      .subscribe(response => console.log(response))
   }
 
   applyFilter(event: Event) {
