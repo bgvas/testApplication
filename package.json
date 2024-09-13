@@ -24,6 +24,7 @@
     "@ngrx/store": "^18.0.2",
     "@ngx-translate/http-loader": "^8.0.0",
     "angular-highcharts": "^17.0.1",
+    "highcharts": "^11.4.8",
     "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

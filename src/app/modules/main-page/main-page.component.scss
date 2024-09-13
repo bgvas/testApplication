@@ -1,0 +1,15 @@
+.main-page-container {
+  padding: 10px 20px;
+  background-color: lightgray;
+  .align-filter-section {
+    padding: 0;
+    margin-bottom: 10px;
+  }
+}
+
+
+@media screen and (max-width: 1024px){
+   .main-page-container {
+     padding: 10px !important;
+   }
+}

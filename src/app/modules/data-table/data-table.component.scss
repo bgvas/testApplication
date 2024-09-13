@@ -12,10 +12,13 @@ td, th {
 }
 
 .table-container {
-  height: 400px;
-  width: 550px;
+  height: 40vh;
+  width: 100vw;
   max-width: 100%;
   overflow: auto;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  background-color: white;
 }
 
 
@@ -29,9 +32,20 @@ th.mat-column-position, td.mat-column-position {
 }
 
 .mat-mdc-table-sticky-border-elem-right {
-  border-left: 1px solid #e0e0e0;
+  border-left: 1px solid var(--light-blue);
 }
 
 .mat-mdc-table-sticky-border-elem-left {
-  border-right: 1px solid #e0e0e0;
+  border-right: 1px solid var(--light-blue);
+}
+
+.mat-mdc-paginator-outer-container {
+  background-color: var(--light-blue);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.mat-mdc-paginator {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }

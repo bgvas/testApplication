@@ -1,0 +1,30 @@
+<div class="main-page-container">
+
+  <h3 class="main-page-title">Main Page</h3>
+
+  <div class="align-filter-section">
+    <mat-accordion>
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon [fontIcon]="'filter_alt'"></mat-icon> Filters
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-data-filter />
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+
+  <div class="section">
+    <app-data-chart />
+  </div>
+
+  <div class="section">
+    <app-data-table />
+  </div>
+
+
+</div>
+
+

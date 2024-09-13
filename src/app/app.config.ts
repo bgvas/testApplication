@@ -4,6 +4,7 @@ import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {provideHttpClient, withInterceptors} from "@angular/common/http";
 import {dataInterceptor} from "./interceptors/data.interceptor";
+import {ChartModule} from "angular-highcharts";
 
 
 export const appConfig: ApplicationConfig = {
@@ -14,6 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     importProvidersFrom([
       RouterModule.forRoot(routes, {useHash: true}),
+      ChartModule
     ]),
     provideHttpClient(
       withInterceptors([

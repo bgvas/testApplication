@@ -5,4 +5,5 @@ export interface DataFilter {
   symbol?: string;
   name?: string;
   market_cap?: number;
+  precision?: number;
 }
