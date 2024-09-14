@@ -3,16 +3,13 @@ table {
 }
 
 .mat-mdc-form-field {
-  font-size: 14px;
+  font-size: 12px;
   width: 100%;
 }
 
-td, th {
-  width: 25%;
-}
 
 .table-container {
-  height: 40vh;
+  height: 45vh;
   width: 100vw;
   max-width: 100%;
   overflow: auto;
@@ -20,6 +17,7 @@ td, th {
   border-top-left-radius: 15px;
   background-color: white;
 }
+
 
 
 td.mat-column-star {
@@ -48,4 +46,14 @@ th.mat-column-position, td.mat-column-position {
 .mat-mdc-paginator {
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
+}
+
+.mat-mdc-paginator-page-size {
+  display: inline !important;
+}
+
+@media screen and (max-width: 1000px) {
+  .table-container {
+    height: 40vh;
+  }
 }

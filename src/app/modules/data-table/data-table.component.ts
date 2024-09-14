@@ -20,6 +20,7 @@ import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {CurrencyDataService} from "../../services/currency-data.service";
 import {DataFilter} from "../../interfaces/data-filter";
 import {DataInterface} from "../../interfaces/data.interface";
+import {take} from "rxjs";
 
 @Component({
   selector: 'app-data-table',
@@ -81,9 +82,9 @@ export class DataTableComponent implements AfterViewInit{
       this.dataSource.paginator.firstPage();
     }
 
-   /* this.dataService.getData(this.createdFilter)
+    this.dataService.getData(this.createdFilter)
       .pipe(take(1))
-      .subscribe(response => this.dataSource.data = response)*/
+      .subscribe(response => this.dataSource.data = response)
   }
 
   applyFilter(event: Event) {

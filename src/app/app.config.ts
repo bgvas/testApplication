@@ -5,6 +5,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import {provideHttpClient, withInterceptors} from "@angular/common/http";
 import {dataInterceptor} from "./interceptors/data.interceptor";
 import {ChartModule} from "angular-highcharts";
+import {EffectsModule} from "@ngrx/effects";
+import {DataEffects} from "./store/effects/data.effects";
+import {StoreModule} from "@ngrx/store";
+import {appReducers} from "./store/reducers/app.reducers";
 
 
 export const appConfig: ApplicationConfig = {
@@ -15,7 +19,11 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     importProvidersFrom([
       RouterModule.forRoot(routes, {useHash: true}),
-      ChartModule
+      ChartModule,
+      StoreModule.forRoot(appReducers),
+      EffectsModule.forRoot(
+        [DataEffects]
+      )
     ]),
     provideHttpClient(
       withInterceptors([
