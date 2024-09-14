@@ -9,6 +9,7 @@ import {
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
 import {MatIcon} from "@angular/material/icon";
+import {SearchBarComponent} from "../search-bar/search-bar.component";
 
 @Component({
   selector: 'app-main-page',
@@ -22,7 +23,8 @@ import {MatIcon} from "@angular/material/icon";
     MatExpansionPanelDescription,
     MatExpansionPanelHeader,
     MatAccordion,
-    MatIcon
+    MatIcon,
+    SearchBarComponent
   ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss'

@@ -14,15 +14,21 @@ export class DataEffects {
     this.actions$.pipe(
       ofType(Data.ActionType.FetchDataActionTypeRequest),
       switchMap((request: any) => {
-        return this.dataService.getData(request.filter)
-          .pipe(map(response => {
-            console.log(response);
-              return new Data.FetchDataResponse(response);
-            }),
-            catchError((error) => {
-              return throwError(() => of(error));
-            })
-          );
+        try {
+          return this.dataService.getData(request.filter)
+            .pipe(map(response => {
+                console.log(response);
+                return new Data.FetchDataResponse(response);
+              })/*,
+              catchError((error) => {
+                console.log(error);
+                return throwError(() => of(error));
+              })*/
+            );
+        } catch (e: any) {
+          console.log(e);
+          return of(e);
+        }
       }))
   );
 }

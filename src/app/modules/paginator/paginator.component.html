@@ -1,5 +1,10 @@
 <div class="paginator-box">
 
+  <div class="spinner" *ngIf="isLoading">
+    <mat-spinner [diameter]="20"></mat-spinner>
+    <span class="is-loading">Loading</span>
+  </div>
+
   <button class="action-button" (click)="clickedPrevious()" [ngClass]="{'disabled': currentPage === 1}">
     <mat-icon [fontIcon]="'navigate_before'"></mat-icon>
   </button>

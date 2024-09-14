@@ -9,7 +9,6 @@ import {EffectsModule} from "@ngrx/effects";
 import {DataEffects} from "./store/effects/data.effects";
 import {StoreModule} from "@ngrx/store";
 import {appReducers} from "./store/reducers/app.reducers";
-import {ToastrModule} from "ngx-toastr";
 
 
 export const appConfig: ApplicationConfig = {
@@ -21,7 +20,6 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom([
       RouterModule.forRoot(routes, {useHash: true}),
       ChartModule,
-      ToastrModule.forRoot(),
       StoreModule.forRoot(appReducers),
       EffectsModule.forRoot(
         [DataEffects]

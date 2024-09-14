@@ -43,6 +43,14 @@ th.mat-column-position, td.mat-column-position {
   border-bottom-right-radius: 15px;
 }
 
+.mat-mdc-cell {
+  text-align: center !important;
+}
+
+.mat-sort-header-container {
+  justify-content: center !important;
+}
+
 .mat-mdc-paginator {
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
@@ -52,6 +60,25 @@ th.mat-column-position, td.mat-column-position {
   display: inline !important;
 }
 
+.lower {
+  color: darkred;
+  font-weight: 1000;
+}
+
+.higher {
+  color: darkgreen;
+  font-weight: 1000;
+}
+
+.neutral {
+  font-weight: 1000;
+}
+
+.no-results {
+  text-align: center;
+  height: 50px;
+  color: var(--blue);
+}
 
 @media screen and (max-width: 1000px) {
   .table-container {
