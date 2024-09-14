@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, inject, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component, EventEmitter,
+  inject,
+  OnDestroy,
+  OnInit, Output,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {
@@ -22,7 +31,10 @@ import {catchError, map, Observable, of, Subject, take, takeUntil, throwError} f
 import {Store, select} from "@ngrx/store";
 import {IAppState} from "../../store/states/IAppState";
 import {FetchDataRequest} from "../../store/actions/data.actions";
-import {fetchDataSelector} from "../../store/selectors/data.selectors";
+import {
+  fetchDataSelector,
+  isLoadingSelector
+} from "../../store/selectors/data.selectors";
 import {AsyncPipe, DecimalPipe, NgClass, NgIf} from "@angular/common";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {PaginatorComponent} from "../paginator/paginator.component";
@@ -63,6 +75,7 @@ export class DataTableComponent implements AfterViewInit, OnInit, OnDestroy{
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  @Output() data: EventEmitter<DataInterface[]> = new EventEmitter<DataInterface[]>();
   displayedColumns: string[] = [
     "id",
     "name",
@@ -80,26 +93,22 @@ export class DataTableComponent implements AfterViewInit, OnInit, OnDestroy{
   nextPage: number = 1;
   store = inject(Store<IAppState>);
   data$: Observable<DataInterface[]>;
-  isLoading: boolean = false;
+  isLoading$: Observable<boolean>;
   hasNextPage: boolean = false;
   pageSize = 250;
   resetPaginator: boolean = false;
   componentIsDestroyed$: Subject<boolean> = new Subject<boolean>();
+  changeDetector = inject(ChangeDetectorRef);
 
 
   constructor() {
-
     this.data$ = this.store.pipe(select(fetchDataSelector))
-      .pipe(catchError(error => {
-        return throwError(() => error);
-      }))
       .pipe(map(response => {
-        this.isLoading = false;
         this.hasNextPage = !(response?.length < this.pageSize);
         return response;
       }))
 
-
+    this.isLoading$ = this.store.pipe(select(isLoadingSelector));
   }
 
   ngAfterViewInit() {
@@ -107,8 +116,8 @@ export class DataTableComponent implements AfterViewInit, OnInit, OnDestroy{
       this.sort?.sortChange
         .pipe(takeUntil(this.componentIsDestroyed$))
         .subscribe(sorting => {
-          this.resetPaginator = true;
           this.createdFilter = {...this.createdFilter, page: 1, order: sorting.active + '_' + sorting.direction};
+          this.resetPaginator = true;
         });
   }
 
@@ -116,15 +125,13 @@ export class DataTableComponent implements AfterViewInit, OnInit, OnDestroy{
   ngOnInit() {
     this.nextPage = 1;
     this.fetchData({page: 1, per_page: 250, order: 'market_cap_desc'});
-
-
   }
 
 
   fetchData(filter: DataFilter) {
     if (filter) {
-      this.isLoading = true;
       this.store.dispatch(new FetchDataRequest(filter));
+      this.changeDetector.detectChanges();
     }
   }
 
@@ -140,7 +147,4 @@ export class DataTableComponent implements AfterViewInit, OnInit, OnDestroy{
     this.componentIsDestroyed$.unsubscribe();
   }
 
-  onChangeSorting() {
-    console.log('change')
-  }
 }

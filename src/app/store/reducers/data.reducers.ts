@@ -1,4 +1,7 @@
-import {FetchDataInitialState, IFetchDataState} from "../states/IData.state";
+import {
+  FetchDataInitialState,
+  IFetchDataState
+} from "../states/IData.state";
 import * as Data from '../actions/data.actions';
 import {ActionType} from "../actions/data.actions";
 
@@ -6,14 +9,18 @@ export function fetchDataReducers(state: IFetchDataState = FetchDataInitialState
   switch (action.type) {
     case ActionType.FetchDataActionTypeRequest: {
       return {
-        ...state
+        ...state,
+        isLoading: true
       }
     }
     case ActionType.FetchDataActionTypeResponse: {
       return {
         ...state,
-        dataResponse: action.response
+        dataResponse: action.response,
+        isLoading: false
       }
     }
+    default:
+      return state;
   }
 }

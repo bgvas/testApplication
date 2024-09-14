@@ -4,6 +4,11 @@ import {IAppState} from "../states/IAppState";
 
 export const fetchData = (state: IAppState) => state.fetchData;
 
+export const isLoadingSelector = createSelector(
+  fetchData,
+  (state: IFetchDataState) => state?.isLoading
+)
+
 export const fetchDataSelector = createSelector(
   fetchData,
   (state: IFetchDataState) => state?.dataResponse

@@ -45,7 +45,7 @@
       </ng-container>
 
       <ng-container matColumnDef="price_change_percentage_24h">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Price % Change(24h) </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Price Change(24h) </th>
         <td class="value" mat-cell *matCellDef="let row">
           <span *ngIf="row.price_change_percentage_24h < 0" class="lower">
             {{row.price_change_percentage_24h   | number: '1.2-2'}} %
@@ -75,7 +75,7 @@
   </section>
 
   <app-paginator
-    [isLoading]="isLoading"
+    [isLoading]="(isLoading$ | async) || false"
     [reset]="resetPaginator"
     [pageSize]="250"
     [hasNextPage]="hasNextPage"

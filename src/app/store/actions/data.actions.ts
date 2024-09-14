@@ -5,7 +5,7 @@ import {DataInterface} from "../../interfaces/data.interface";
 
 export enum ActionType {
   FetchDataActionTypeRequest = '[Fetch Data] Fetch Data -> Request',
-  FetchDataActionTypeResponse = '[Fetch Data] Fetch Data -> Response',
+  FetchDataActionTypeResponse = '[Fetch Data] Fetch Data -> Response'
 }
 
 export class FetchDataRequest implements Action {

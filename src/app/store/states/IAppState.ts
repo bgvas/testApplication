@@ -1,4 +1,7 @@
-import {FetchDataInitialState, IFetchDataState} from "./IData.state";
+import {
+  FetchDataInitialState,
+  IFetchDataState
+} from "./IData.state";
 
 export interface IAppState {
   fetchData: IFetchDataState;
