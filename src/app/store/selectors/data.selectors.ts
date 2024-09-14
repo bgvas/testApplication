@@ -6,5 +6,5 @@ export const fetchData = (state: IAppState) => state.fetchData;
 
 export const fetchDataSelector = createSelector(
   fetchData,
-  (state: IFetchDataState) => state.dataResponse
+  (state: IFetchDataState) => state?.dataResponse
 )

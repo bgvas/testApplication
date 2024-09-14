@@ -16,6 +16,7 @@ export class DataEffects {
       switchMap((request: any) => {
         return this.dataService.getData(request.filter)
           .pipe(map(response => {
+            console.log(response);
               return new Data.FetchDataResponse(response);
             }),
             catchError((error) => {

@@ -1,8 +1,13 @@
-
+<!--
+<ng-container *ngIf="true">
+  <mat-spinner class="spinner"></mat-spinner>
+</ng-container>
+-->
 
 <div class="box-shadow">
   <section class="table-container mat-elevation-z8" tabindex="0">
-    <table style="width: 100%" mat-table [dataSource]="dataSource" matSort>
+
+    <table style="width: 100%" mat-table [dataSource]="(data$ | async) || []" matSort>
 
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
@@ -62,12 +67,13 @@
         <td class="mat-cell" colspan="10">No Results</td>
       </tr>
     </table>
+
   </section>
 
-  <mat-paginator
-    (page)="onPaginatorEvent($event)"
-    [pageSizeOptions]="[10, 25, 100, 250]">
-  </mat-paginator>
+  <app-paginator
+    [pageSize]="250"
+    [hasNextPage]="hasNextPage"
+    (changePage)="onPageChange($event)"/>
 </div>
 
 

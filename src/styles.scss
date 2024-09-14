@@ -7,6 +7,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 :root {
    --light-blue: #e6e6e7;
+   --light-grey: #a4a4a4;
+   --blue: rgb(26, 100, 141);
+}
+
+.spinner {
+  position: absolute;
+  display: flex;
+  top: 40px;
+  margin: 0 auto;
+}
+
+.disabled {
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 
