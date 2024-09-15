@@ -1,10 +1,15 @@
 import {
   AfterViewInit,
   ChangeDetectorRef,
-  Component, EventEmitter,
+  Component,
+  EventEmitter,
   inject,
+  Input,
+  OnChanges,
   OnDestroy,
-  OnInit, Output,
+  OnInit,
+  Output,
+  SimpleChanges,
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
@@ -23,21 +28,19 @@ import {
   MatRowDef,
   MatTable
 } from "@angular/material/table";
-import {MatSort, MatSortHeader} from "@angular/material/sort";
+import {MatSort, MatSortHeader, Sort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {DataFilter} from "../../interfaces/data-filter";
 import {DataInterface} from "../../interfaces/data.interface";
-import {catchError, map, Observable, of, Subject, take, takeUntil, throwError} from "rxjs";
-import {Store, select} from "@ngrx/store";
+import {map, Observable, Subject, takeUntil} from "rxjs";
+import {select, Store} from "@ngrx/store";
 import {IAppState} from "../../store/states/IAppState";
 import {FetchDataRequest} from "../../store/actions/data.actions";
-import {
-  fetchDataSelector,
-  isLoadingSelector
-} from "../../store/selectors/data.selectors";
+import {fetchDataSelector, isLoadingSelector} from "../../store/selectors/data.selectors";
 import {AsyncPipe, DecimalPipe, NgClass, NgIf} from "@angular/common";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {PaginatorComponent} from "../paginator/paginator.component";
+import {MainHelper} from "../../helpers/main.helper";
 
 @Component({
   selector: 'app-data-table',
@@ -71,11 +74,12 @@ import {PaginatorComponent} from "../paginator/paginator.component";
   styleUrl: './data-table.component.scss',
   encapsulation: ViewEncapsulation.None
 })
-export class DataTableComponent implements AfterViewInit, OnInit, OnDestroy{
+export class DataTableComponent implements AfterViewInit, OnInit, OnDestroy, OnChanges{
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @Output() data: EventEmitter<DataInterface[]> = new EventEmitter<DataInterface[]>();
+  @Input() selectedFilter!: DataFilter | null;
   displayedColumns: string[] = [
     "id",
     "name",
@@ -88,16 +92,17 @@ export class DataTableComponent implements AfterViewInit, OnInit, OnDestroy{
     "price_change_percentage_24h",
     "circulating_supply"
   ];
-  createdFilter: DataFilter = {page: 1, per_page: 250, order: 'market_cap_desc'}
   currentPage: number = 0;
   store = inject(Store<IAppState>);
   data$: Observable<DataInterface[]>;
   isLoading$: Observable<boolean>;
   hasNextPage: boolean = false;
   pageSize = 250;
+  defaultOrder = 'market_cap_desc';
   resetPaginator: boolean = false;
   componentIsDestroyed$: Subject<boolean> = new Subject<boolean>();
   changeDetector = inject(ChangeDetectorRef);
+  createdFilter: DataFilter = {page: 1, per_page: this.pageSize, order: this.defaultOrder}
 
 
   constructor() {
@@ -111,21 +116,29 @@ export class DataTableComponent implements AfterViewInit, OnInit, OnDestroy{
 
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.selectedFilter) {
+      this.filterDataTable();
+    }
+    else  {
+     this.resetFilteredTable();
+    }
+  }
+
+
   ngAfterViewInit() {
      this.onShortChange();
   }
 
   ngOnInit() {
-    this.fetchData({page: 1, per_page: 250, order: 'market_cap_desc'});
+    this.fetchData({page: 1, per_page: this.pageSize, order: this.defaultOrder});
   }
 
   onShortChange() {
-    /* When you change the sorting, you return to the first page */
     this.sort?.sortChange
       .pipe(takeUntil(this.componentIsDestroyed$))
       .subscribe(sorting => {
-        this.createdFilter = {...this.createdFilter, page: 1, order: sorting.active + '_' + sorting.direction};
-        this.resetPaginator = true;
+       this.changeSortingOfDataTable(sorting);
       });
   }
 
@@ -143,9 +156,46 @@ export class DataTableComponent implements AfterViewInit, OnInit, OnDestroy{
       this.fetchData(this.createdFilter);
   }
 
+  changeSortingOfDataTable(sorting: Sort) {
+    if (sorting.direction === '') {
+      this.data$ = this.data$ = this.store.pipe(select(fetchDataSelector))
+        .pipe(map(response => {
+          this.hasNextPage = !(response?.length < this.pageSize);
+          return response;
+        }))
+    } else {
+      this.data$ = this.data$.pipe(map(coins => {
+        return MainHelper.sortDataInterfaceArray(sorting, coins);
+      }));
+    }
+  }
+
+  filterDataTable() {
+     this.data$ = this.data$.pipe(map(coins => {
+       if (this.selectedFilter?.name) {
+         coins = coins.filter(coin => coin.name === this.selectedFilter?.name);
+       }
+       if (this.selectedFilter?.symbol) {
+         coins = coins.filter(coin => coin.symbol === this.selectedFilter?.symbol);
+       }
+       if (this.selectedFilter?.market_cap) {
+         coins = coins.filter(coin => coin.market_cap === this.selectedFilter?.market_cap);
+       }
+
+       return coins;
+     }));
+  }
+
+  resetFilteredTable() {
+    this.data$ = this.store.pipe(select(fetchDataSelector))
+      .pipe(map(response => {
+        this.hasNextPage = !(response?.length < this.pageSize);
+        return response;
+      }))
+  }
+
   ngOnDestroy() {
     this.componentIsDestroyed$.next(true);
     this.componentIsDestroyed$.unsubscribe();
   }
-
 }

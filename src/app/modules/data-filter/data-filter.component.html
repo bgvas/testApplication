@@ -1,23 +1,23 @@
-<div class="filter-container">
+<div class="filter-container" [formGroup]="form">
 
     <mat-form-field class="full-width">
       <mat-label>Name</mat-label>
-      <input matInput placeholder="ex. Bitcoin">
+      <input type="text" [formControlName]="'name'" matInput placeholder="ex. Bitcoin">
     </mat-form-field>
 
     <mat-form-field class="full-width">
       <mat-label>Symbol</mat-label>
-      <input matInput placeholder="Ex. btc">
+      <input type="text" [formControlName]="'symbol'" matInput placeholder="Ex. btc">
     </mat-form-field>
 
     <mat-form-field class="full-width">
       <mat-label>Market Cap</mat-label>
-      <input matInput placeholder="Ex. 381651251">
+      <input type="number" [formControlName]="'market_cap'" matInput placeholder="Ex. 30000000">
     </mat-form-field>
 
-  <div class="search-button-section">
-    <button class="search-button" mat-raised-button>Search</button>
-    <button class="clear-button" mat-raised-button>Clear</button>
+  <div class="search-button-section" [ngClass]="{'disabled': inputFieldsAreEmpty()}">
+    <button class="search-button" mat-raised-button (click)="onSearch()" >Search</button>
+    <button class="clear-button" mat-raised-button (click)="onClear()">Clear</button>
   </div>
 
 </div>

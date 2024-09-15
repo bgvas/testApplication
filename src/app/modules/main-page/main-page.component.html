@@ -14,7 +14,7 @@
             <mat-icon [fontIcon]="'filter_alt'"></mat-icon> Filters
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <app-data-filter />
+        <app-data-filter (filterData)="getSelectedFilter($event)"/>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
@@ -25,7 +25,7 @@
   </div>
 
   <div class="section">
-    <app-data-table/>
+    <app-data-table [selectedFilter]="selectedFilter"/>
   </div>
 
 

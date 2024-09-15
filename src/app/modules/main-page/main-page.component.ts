@@ -10,6 +10,7 @@ import {
 } from "@angular/material/expansion";
 import {MatIcon} from "@angular/material/icon";
 import {SearchBarComponent} from "../search-bar/search-bar.component";
+import {DataFilter} from "../../interfaces/data-filter";
 
 @Component({
   selector: 'app-main-page',
@@ -31,4 +32,9 @@ import {SearchBarComponent} from "../search-bar/search-bar.component";
 })
 export class MainPageComponent {
 
+  selectedFilter: DataFilter | null = null;
+
+  getSelectedFilter(filter: DataFilter | null) {
+        this.selectedFilter = filter;
+  }
 }
