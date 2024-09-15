@@ -67,7 +67,7 @@ export class DataChartComponent implements OnDestroy{
                 <img src="${point.options.image}" alt="${point.name}" style="width: 30px; height: 30px;"/><br/>
                 <b>${point.name}</b><br/>
                  Market Cap: ${numberFormat(point.y, 0,',','.')} $<br/>
-                 Rank in page: ${point.labelrank + 1}
+                 Ranking on the page: ${point.labelrank + 1}
                 </div>
               `
             }
