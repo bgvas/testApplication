@@ -1,0 +1,31 @@
+.search-bar-container {
+  width: 100%;
+  background-color: white;
+  height: 40px;
+  display: flex;
+  border: 1px solid var(--light-grey);
+  border-radius: 15px;
+
+  .search-bar-icon {
+    height: 100%;
+    width: 100%;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    background-color: transparent;
+    border: 0;
+    padding-top: 3px;
+    padding-left: 7px;
+    .mat-icon {
+      fill: transparent !important;
+      background-color: transparent;
+      color: var(--blue);
+      padding: 5px;
+    }
+  }
+
+  .search-bar-input-field {
+    border: 0;
+    background-color: transparent;
+    border-left: 1px solid  var(--light-grey);
+  }
+}

@@ -1,0 +1,32 @@
+.paginator-box {
+  display: flex;
+  width: 100%;
+  height: 40px;
+  background-color: var(--light-blue);
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.action-button {
+  border: 0;
+  background-color: var(--light-grey);
+  border-radius: 50%;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  color: var(--blue);
+  margin: 0 10px;
+  text-align: center;
+  .mat-icon {
+    margin-left: -5px;
+  }
+}
+
+.is-loading {
+  display: block;
+  font-weight: 1000;
+  margin-left: 10px;
+  color: var(--blue);
+}

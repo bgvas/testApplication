@@ -1,10 +1,47 @@
 /* You can add global styles to this file, and also import other style files */
 
 
-html, body { height: 100vh; width: 100vw }
+html, body { height: 100vh}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 :root {
+   --light-blue: #e6e6e7;
+   --light-grey: #a4a4a4;
+   --grey: #5b5b5b;
+   --blue:  #005cbb;
+   --light-red: rgb(245, 160, 166);
+   --red: #c50202;
+}
 
+.spinner {
+  position: absolute;
+  display: flex;
+  left: 40px;
+  margin: 0 auto;
+}
+
+
+.mat-mdc-snack-bar-container .mat-mdc-snackbar-surface {
+  background-color: rgba(210, 14, 14, 0.88) !important;
+  border-radius: 15px !important;
+  color: white !important;
+
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__label {
+  font-weight: 1000 !important;
+  font-size: 14px !important;
+}
+
+.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+
+@media screen and (max-width: 400px) {
+  .mdc-text-field--filled .mdc-floating-label {
+    font-size: 12px !important;
+  }
 }

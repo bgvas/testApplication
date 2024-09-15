@@ -1,0 +1,34 @@
+<div class="main-page-container">
+
+  <div class="main-page-header">
+    <span class="title">Main Page</span>
+    <app-search-bar (keyword)="onInputKeyword($event)"/>
+  </div>
+
+
+  <div class="align-filter-section">
+    <mat-accordion>
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon [fontIcon]="'filter_alt'"></mat-icon> Filters
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-data-filter (filterData)="getSelectedFilter($event)"/>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+
+  <div class="section">
+    <app-data-chart />
+  </div>
+
+  <div class="section">
+    <app-data-table [selectedFilter]="selectedFilter" [searchBarKeyword]="keyword"/>
+  </div>
+
+
+</div>
+
+

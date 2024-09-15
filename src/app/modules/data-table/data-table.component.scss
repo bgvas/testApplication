@@ -1,0 +1,87 @@
+table {
+  width: 800px;
+}
+
+.mat-mdc-form-field {
+  font-size: 12px;
+  width: 100%;
+}
+
+
+.table-container {
+  height: 45vh;
+  width: 100vw;
+  max-width: 100%;
+  overflow: auto;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  background-color: white;
+}
+
+
+
+td.mat-column-star {
+  width: 20px;
+  padding-right: 8px;
+}
+
+th.mat-column-position, td.mat-column-position {
+  padding-left: 8px;
+}
+
+.mat-mdc-table-sticky-border-elem-right {
+  border-left: 1px solid var(--light-blue);
+}
+
+.mat-mdc-table-sticky-border-elem-left {
+  border-right: 1px solid var(--light-blue);
+}
+
+.mat-mdc-paginator-outer-container {
+  background-color: var(--light-blue);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.mat-mdc-cell {
+  text-align: center !important;
+}
+
+.mat-sort-header-container {
+  justify-content: center !important;
+}
+
+.mat-mdc-paginator {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.mat-mdc-paginator-page-size {
+  display: inline !important;
+}
+
+.lower {
+  color: darkred;
+  font-weight: 1000;
+}
+
+.higher {
+  color: darkgreen;
+  font-weight: 1000;
+}
+
+.neutral {
+  font-weight: 1000;
+}
+
+.no-results {
+  text-align: center;
+  height: 50px;
+  color: var(--blue);
+}
+
+@media screen and (max-width: 1000px) {
+  .table-container {
+    height: 40vh;
+  }
+}

@@ -1,0 +1,4 @@
+<div class="search-bar-container">
+   <div class="search-bar-icon"><mat-icon [fontIcon]="'search'"></mat-icon></div>
+   <input class="search-bar-input-field" #input (keyup)="searchByKeyword(input.value)" [placeholder]="'Type anything to search'">
+</div>

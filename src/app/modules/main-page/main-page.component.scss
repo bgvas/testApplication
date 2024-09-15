@@ -1,0 +1,25 @@
+.main-page-container {
+  padding: 0 20px;
+  background-color: lightgray;
+  height: auto;
+  min-height: 100vh;
+  .align-filter-section {
+    padding: 0;
+    margin-bottom: 10px;
+  }
+  .main-page-header {
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    .title {
+       font-size: 30px;
+       display: flex;
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .main-page-container {
+    padding-bottom: 5px !important;
+  }
+}
