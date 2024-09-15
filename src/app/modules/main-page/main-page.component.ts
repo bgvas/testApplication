@@ -33,8 +33,13 @@ import {DataFilter} from "../../interfaces/data-filter";
 export class MainPageComponent {
 
   selectedFilter: DataFilter | null = null;
+  keyword: string | null = null;
 
   getSelectedFilter(filter: DataFilter | null) {
-        this.selectedFilter = filter;
+     this.selectedFilter = filter;
+  }
+
+  onInputKeyword(keyword: string) {
+    this.keyword = keyword;
   }
 }

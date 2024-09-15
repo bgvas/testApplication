@@ -4,9 +4,7 @@ import {MatInput} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {NgClass} from "@angular/common";
-import {DataInterface} from "../../interfaces/data.interface";
 import {DataFilter} from "../../interfaces/data-filter";
-import {Data} from "@angular/router";
 
 @Component({
   selector: 'app-data-filter',
@@ -52,10 +50,4 @@ export class DataFilterComponent {
      this.filterData.emit(null);
   }
 
-  inputFieldsAreEmpty() {
-    /* Disable the filter buttons until user enters a value */
-    return !this.form.get('name')?.getRawValue() &&
-      !this.form.get('symbol')?.getRawValue() &&
-      !this.form.get('market_cap')?.getRawValue();
-  }
 }

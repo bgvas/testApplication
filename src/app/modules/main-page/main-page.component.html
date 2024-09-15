@@ -2,7 +2,7 @@
 
   <div class="main-page-header">
     <span class="title">Main Page</span>
-    <app-search-bar />
+    <app-search-bar (keyword)="onInputKeyword($event)"/>
   </div>
 
 
@@ -25,7 +25,7 @@
   </div>
 
   <div class="section">
-    <app-data-table [selectedFilter]="selectedFilter"/>
+    <app-data-table [selectedFilter]="selectedFilter" [searchBarKeyword]="keyword"/>
   </div>
 
 

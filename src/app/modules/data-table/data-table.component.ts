@@ -80,6 +80,7 @@ export class DataTableComponent implements AfterViewInit, OnInit, OnDestroy, OnC
   @ViewChild(MatSort) sort!: MatSort;
   @Output() data: EventEmitter<DataInterface[]> = new EventEmitter<DataInterface[]>();
   @Input() selectedFilter!: DataFilter | null;
+  @Input() searchBarKeyword!: string | null;
   displayedColumns: string[] = [
     "id",
     "name",
@@ -105,6 +106,7 @@ export class DataTableComponent implements AfterViewInit, OnInit, OnDestroy, OnC
   createdFilter: DataFilter = {page: 1, per_page: this.pageSize, order: this.defaultOrder}
 
 
+
   constructor() {
     this.data$ = this.store.pipe(select(fetchDataSelector))
       .pipe(map(response => {
@@ -120,8 +122,11 @@ export class DataTableComponent implements AfterViewInit, OnInit, OnDestroy, OnC
     if (this.selectedFilter) {
       this.filterDataTable();
     }
-    else  {
+    else if (this.selectedFilter === null && !this.searchBarKeyword){
      this.resetFilteredTable();
+    }
+    else if (this.searchBarKeyword) {
+      this.filterBySearchBar(this.searchBarKeyword);
     }
   }
 
@@ -173,17 +178,50 @@ export class DataTableComponent implements AfterViewInit, OnInit, OnDestroy, OnC
   filterDataTable() {
      this.data$ = this.data$.pipe(map(coins => {
        if (this.selectedFilter?.name) {
-         coins = coins.filter(coin => coin.name === this.selectedFilter?.name);
+         coins = coins.filter(coin => coin.name.trim().toLowerCase().includes(this.selectedFilter?.name?.trim().toLowerCase() || ''));
        }
        if (this.selectedFilter?.symbol) {
-         coins = coins.filter(coin => coin.symbol === this.selectedFilter?.symbol);
+         coins = coins.filter(coin => coin.symbol.trim().toLowerCase().includes(this.selectedFilter?.symbol?.trim().toLowerCase() || ''));
        }
        if (this.selectedFilter?.market_cap) {
-         coins = coins.filter(coin => coin.market_cap === this.selectedFilter?.market_cap);
+         coins = coins.filter(coin => coin.market_cap.toString() === this.selectedFilter?.market_cap?.toString());
        }
 
        return coins;
      }));
+  }
+
+
+  filterBySearchBar(searchKey: any) {
+    if ((searchKey.toString()).length > 0) {
+      this.data$ = this.data$.pipe(map(coins => {
+        if (coins?.length > 0) {
+          return coins.filter(coin => {
+            let found: boolean = false;
+
+            /* If the searchKey is included in a field, then it will be marked as found. Otherwise, it will continue to the next field */
+            for (const key in coin) {
+              // @ts-ignore
+              if (key !== 'image' && (coin[key]?.toString())?.includes(searchKey?.toString())) {
+                found = true;
+              }
+            }
+            return found;
+          })
+        } else {
+          return  [];
+        }
+      }))
+    } else {
+
+      /* reset the data table to the stored data  */
+      this.data$ = this.data$ = this.store.pipe(select(fetchDataSelector))
+        .pipe(map(response => {
+          this.hasNextPage = !(response?.length < this.pageSize);
+          return response;
+        }))
+    }
+
   }
 
   resetFilteredTable() {

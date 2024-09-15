@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {MatIcon} from "@angular/material/icon";
 
 @Component({
@@ -12,4 +12,9 @@ import {MatIcon} from "@angular/material/icon";
 })
 export class SearchBarComponent {
 
+  @Output() keyword: EventEmitter<string> = new EventEmitter<string>();
+
+  searchByKeyword(value: string) {
+     this.keyword.emit(value);
+  }
 }

@@ -6,26 +6,21 @@
   border: 1px solid var(--light-grey);
   border-radius: 15px;
 
-  .search-bar-button {
+  .search-bar-icon {
     height: 100%;
     width: 100%;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
     background-color: transparent;
     border: 0;
-    cursor: pointer;
-    transition: background-color 0.8s;
+    padding-top: 3px;
+    padding-left: 7px;
     .mat-icon {
       fill: transparent !important;
       background-color: transparent;
       color: var(--blue);
       padding: 5px;
     }
-  }
-
-  .search-bar-button:hover {
-    background-color: var(--light-grey);
-    transition: background-color 0.8s;
   }
 
   .search-bar-input-field {
