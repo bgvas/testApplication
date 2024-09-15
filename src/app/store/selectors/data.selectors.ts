@@ -9,6 +9,11 @@ export const isLoadingSelector = createSelector(
   (state: IFetchDataState) => state?.isLoading
 )
 
+export const errorSelector = createSelector(
+  fetchData,
+  (state: IFetchDataState) => state?.error
+)
+
 export const fetchDataSelector = createSelector(
   fetchData,
   (state: IFetchDataState) => state?.dataResponse

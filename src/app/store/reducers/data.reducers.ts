@@ -20,6 +20,13 @@ export function fetchDataReducers(state: IFetchDataState = FetchDataInitialState
         isLoading: false
       }
     }
+    case ActionType.FetchDataActionTypeError: {
+      return {
+        ...state,
+        error: action.response,
+        isLoading: false
+      }
+    }
     default:
       return state;
   }

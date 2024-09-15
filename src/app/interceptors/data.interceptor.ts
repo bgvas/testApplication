@@ -22,9 +22,9 @@ export const dataInterceptor: HttpInterceptorFn = (req, next) => {
       if (error.status >= 500) {
         snackbar.openSnackBar('Internal server error', 'error');
       } else if (error.status === 429) {
-        snackbar.openSnackBar('Too many requests', 'error');
+        snackbar.openSnackBar('Too many requests. Try again in a few seconds', 'error');
       } else if (error.status === 400) {
-        snackbar.openSnackBar('Error. Please check you request', 'error');
+        snackbar.openSnackBar('There is an error in your request. Please check and try again.', 'error');
       } else if (error.status === 401) {
         snackbar.openSnackBar('Unauthorized', 'error');
       } else if (error.status === 404) {
@@ -32,7 +32,7 @@ export const dataInterceptor: HttpInterceptorFn = (req, next) => {
       } else if (error.status === 10020) {
         snackbar.openSnackBar('Access denied', 'error');
       } else if (error.status === 0) {
-        snackbar.openSnackBar('Too many requests', 'error');
+        snackbar.openSnackBar('Too many requests. Try again in a few seconds', 'error');
       } else {
         snackbar.openSnackBar('Unknown error', 'error');
       }

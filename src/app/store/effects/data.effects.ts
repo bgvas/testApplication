@@ -22,7 +22,7 @@ export class DataEffects {
                 return new Data.FetchDataResponse(response);
               }),
               catchError((error) => {
-                return throwError(() => of(error));
+                return of(new Data.FetchDataError(error));
               })
             );
       }))

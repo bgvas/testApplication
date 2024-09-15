@@ -1,7 +1,7 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {map, Observable} from "rxjs";
+import {catchError, map, Observable, throwError} from "rxjs";
 import {MainHelper} from "../helpers/main.helper";
 
 @Injectable({
@@ -18,7 +18,10 @@ export class CurrencyDataService {
 
   getData(filter: any): Observable<any[]> {
     const params = MainHelper.convertToHttpParams(filter);
-    return this.http.get<any>(this.mainUrl, {params});
+    return this.http.get<any>(this.mainUrl, {params})
+      .pipe(catchError(error => {
+        return throwError(() => error);
+      }))
   }
 
   resetCurrentPageIndex(value: boolean) {

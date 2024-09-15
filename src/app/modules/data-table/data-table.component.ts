@@ -90,7 +90,6 @@ export class DataTableComponent implements AfterViewInit, OnInit, OnDestroy{
   ];
   createdFilter: DataFilter = {page: 1, per_page: 250, order: 'market_cap_desc'}
   currentPage: number = 0;
-  nextPage: number = 1;
   store = inject(Store<IAppState>);
   data$: Observable<DataInterface[]>;
   isLoading$: Observable<boolean>;
@@ -109,24 +108,26 @@ export class DataTableComponent implements AfterViewInit, OnInit, OnDestroy{
       }))
 
     this.isLoading$ = this.store.pipe(select(isLoadingSelector));
+
   }
 
   ngAfterViewInit() {
-      /* When you change the sorting, you return to the first page */
-      this.sort?.sortChange
-        .pipe(takeUntil(this.componentIsDestroyed$))
-        .subscribe(sorting => {
-          this.createdFilter = {...this.createdFilter, page: 1, order: sorting.active + '_' + sorting.direction};
-          this.resetPaginator = true;
-        });
+     this.onShortChange();
   }
 
-
   ngOnInit() {
-    this.nextPage = 1;
     this.fetchData({page: 1, per_page: 250, order: 'market_cap_desc'});
   }
 
+  onShortChange() {
+    /* When you change the sorting, you return to the first page */
+    this.sort?.sortChange
+      .pipe(takeUntil(this.componentIsDestroyed$))
+      .subscribe(sorting => {
+        this.createdFilter = {...this.createdFilter, page: 1, order: sorting.active + '_' + sorting.direction};
+        this.resetPaginator = true;
+      });
+  }
 
   fetchData(filter: DataFilter) {
     if (filter) {
